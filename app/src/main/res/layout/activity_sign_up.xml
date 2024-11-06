@@ -1,0 +1,145 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F4F6F7">
+
+    <!-- Logo avec marges optimisées -->
+    <ImageView
+        android:id="@+id/top_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="30dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sign1" />
+
+    <!-- Champs de texte pour l'inscription avec coins arrondis -->
+    <EditText
+        android:id="@+id/signup_email_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/rounded_edittext_background"
+        android:padding="12dp"
+        android:textColor="@color/email_password_text_color" />
+
+    <EditText
+        android:id="@+id/signup_password_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:background="@drawable/rounded_edittext_background"
+        android:padding="12dp"
+        android:textColor="@color/email_password_text_color" />
+
+    <EditText
+        android:id="@+id/password_verification_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:background="@drawable/rounded_edittext_background"
+        android:padding="12dp"
+        android:textColor="@color/email_password_text_color" />
+
+    <!-- Checkbox pour les termes et conditions -->
+    <CheckBox
+        android:id="@+id/terms_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="I agree to Terms of Service and Privacy Policy"
+        android:textColor="#5D6D7E" />
+
+    <!-- Bouton d'inscription arrondi -->
+    <Button
+        android:id="@+id/sign_up_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#0A3D62"
+        android:padding="12dp"
+        android:text="Sign Up"
+        android:textColor="@android:color/white" />
+
+    <!-- Ligne de séparation avec "Or" plus élégante -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="#D3D3D3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="Or"
+            android:textColor="#B0B0B0"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="#D3D3D3" />
+    </LinearLayout>
+
+    <!-- Boutons de connexion Google et Facebook améliorés -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/signup_google_button"
+            android:layout_width="181dp"
+            android:layout_height="51dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="#0A3D62"
+            android:drawableLeft="@drawable/log_googl"
+            android:drawablePadding="8dp"
+            android:minHeight="48dp"
+            android:text="Google"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/sign_up_button_facebook"
+            android:layout_width="181dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#0A3D62"
+            android:drawableLeft="@drawable/log_face"
+            android:drawablePadding="8dp"
+            android:minHeight="48dp"
+            android:text="Facebook"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <!-- Lien pour rediriger à la connexion -->
+    <TextView
+        android:id="@+id/login_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="Already have an account? Sign In"
+        android:textColor="#3498DB"
+        android:textSize="15sp" />
+</LinearLayout>
