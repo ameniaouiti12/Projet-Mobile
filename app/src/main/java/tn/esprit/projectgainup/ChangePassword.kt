@@ -5,6 +5,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import tn.esprit.projectgainup.databinding.ActivityChangePasswordBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import tn.esprit.projectgainup.dtos.ChangePasswordRequest
+import tn.esprit.projectgainup.dtos.GenericResponse
+import tn.esprit.projectgainup.remote.RetrofitClient
 
 class ChangePassword : AppCompatActivity() {
 
@@ -15,16 +21,15 @@ class ChangePassword : AppCompatActivity() {
         binding = ActivityChangePasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Email de l'utilisateur (à adapter selon l'endroit où il est stocké)
+        val email = intent.getStringExtra("email") ?: ""
+
         binding.changePasswordButton.setOnClickListener {
             val newPassword = binding.newPassword.text.toString()
             val confirmPassword = binding.confirmPassword.text.toString()
 
             if (validatePassword(newPassword, confirmPassword)) {
-                // Logic for password change (e.g., save to database or backend)
-                Toast.makeText(this, "Password changed successfully", Toast.LENGTH_SHORT).show()
-
-                // Naviguer vers la page de connexion
-                navigateToLogin()
+                changePassword(email, newPassword)
             }
         }
     }
@@ -41,10 +46,30 @@ class ChangePassword : AppCompatActivity() {
         return true
     }
 
+    private fun changePassword(email: String, newPassword: String) {
+        val changePasswordRequest = ChangePasswordRequest(email, newPassword)
+
+        val call = RetrofitClient.apiService.changePassword(changePasswordRequest)
+
+        call.enqueue(object : Callback<GenericResponse> {
+            override fun onResponse(call: Call<GenericResponse>, response: Response<GenericResponse>) {
+                if (response.isSuccessful && response.body()?.success == true) {
+                    Toast.makeText(this@ChangePassword, "Password changed successfully", Toast.LENGTH_SHORT).show()
+                    navigateToLogin()
+                } else {
+                    Toast.makeText(this@ChangePassword, "Failed to change password", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                Toast.makeText(this@ChangePassword, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
     private fun navigateToLogin() {
-        // Intent pour naviguer vers LoginActivity
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
-        finish() // Terminer ChangePasswordActivity pour que l'utilisateur ne puisse pas revenir en arrière
+        finish()
     }
 }

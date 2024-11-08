@@ -5,30 +5,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="#F4F6F7">
+    android:background="#FFFFFF">
 
-    <!-- Image du logo -->
+    <!-- Logo Image -->
     <ImageView
         android:id="@+id/top_image"
         android:layout_width="match_parent"
-        android:layout_height="236dp"
-        android:layout_marginBottom="30dp"
+        android:layout_height="220dp"
+        android:layout_marginBottom="12dp"
         android:scaleType="centerCrop"
         android:src="@drawable/sign1" />
 
-    <!-- Conteneur Email -->
+    <!-- Email Input -->
     <LinearLayout
         android:id="@+id/email_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/rounded_edittext_background"
-        android:padding="12dp">
+        android:padding="10dp">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="6dp"
             android:src="@drawable/ic_email"
             app:tint="#757575" />
 
@@ -41,25 +41,24 @@
             android:inputType="textEmailAddress"
             android:background="@null"
             android:textColor="#333333"
-        android:textColorHint="#757575" />
+            android:textColorHint="#757575" />
     </LinearLayout>
 
-    <!-- Conteneur Mot de passe -->
+    <!-- Password Input -->
     <LinearLayout
         android:id="@+id/password_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/rounded_edittext_background"
-        android:padding="12dp">
+        android:padding="10dp">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="6dp"
             android:src="@drawable/ic_lock"
-            app:tint="#757575"
-            android:importantForAccessibility="no" />
+            app:tint="#757575" />
 
         <EditText
             android:id="@+id/sigin_password_edit_text"
@@ -70,55 +69,53 @@
             android:inputType="textPassword"
             android:background="@null"
             android:textColor="#333333"
-        android:textColorHint="#757575" />
+            android:textColorHint="#757575" />
     </LinearLayout>
 
-    <!-- CheckBox Remember Me -->
+    <!-- Remember Me Checkbox -->
     <CheckBox
         android:id="@+id/remember_me_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="12dp"
         android:text="Remember Me"
         android:textColor="#757575" />
 
-    <!-- Bouton de connexion -->
+    <!-- Sign In Button -->
     <Button
         android:id="@+id/connection_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="12dp"
         android:backgroundTint="#0A3D62"
-        android:padding="12dp"
         android:text="Sign In"
         android:textColor="@android:color/white"
-        android:elevation="2dp"
-        android:fontFamily="sans-serif-medium" />
+        android:textStyle="bold" />
 
-    <!-- Lien Forgot Password -->
+    <!-- Forgot Password Link -->
     <TextView
         android:id="@+id/change_password_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
         android:text="Forgot Password?"
         android:textColor="#3498DB"
-        android:layout_marginBottom="24dp"
-        android:fontFamily="sans-serif-medium" />
+        android:textStyle="bold" />
 
-    <!-- Ligne de séparation avec "or" -->
+    <!-- Divider with "Or" -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_marginBottom="12dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="1"
-            android:background="#D1D5DB" />
+            android:background="#D3D3D3" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -126,57 +123,57 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:text="Or"
-            android:textColor="#757575" />
+            android:textColor="#B0B0B0"
+            android:textSize="14sp" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="1"
-            android:background="#D1D5DB" />
+            android:background="#D3D3D3" />
     </LinearLayout>
 
-    <!-- Boutons de connexion Google et Facebook avec icônes -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+   <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/signup_google_button"
-            android:layout_width="181dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:backgroundTint="#0A3D62"
-            android:drawableLeft="@drawable/log_googl"
-            android:drawablePadding="8dp"
-            android:elevation="2dp"
-            android:minHeight="48dp"
-            android:text="Google"
-            android:textColor="@android:color/white" />
+    <Button
+        android:id="@+id/signip_google_button"
+        android:layout_width="181dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
+        android:backgroundTint="#0A3D62"
+        android:drawableLeft="@drawable/log_googl"
+        android:drawablePadding="8dp"
+        android:minHeight="48dp"
+        android:text="Google"
+        android:textColor="@android:color/white" />
 
-        <Button
-            android:id="@+id/sign_up_button_facebook"
-            android:layout_width="181dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#0A3D62"
-            android:drawableLeft="@drawable/log_face"
-            android:drawablePadding="8dp"
-            android:elevation="2dp"
-            android:minHeight="48dp"
-            android:text="Facebook"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/sign_in_button_facebook"
+        android:layout_width="181dp"
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        android:backgroundTint="#0A3D62"
+        android:drawableLeft="@drawable/log_face"
+        android:drawablePadding="8dp"
+        android:minHeight="48dp"
+        android:text="Facebook"
+        android:textColor="@android:color/white" />
+</LinearLayout>
 
-    <!-- Lien de création de compte -->
+    <!-- Sign Up Link -->
     <TextView
         android:id="@+id/Register_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
         android:text="Don't have an account? Sign Up"
         android:textColor="#3498DB"
-        android:fontFamily="sans-serif-medium" />
+        android:textStyle="bold" />
 
 </LinearLayout>

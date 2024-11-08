@@ -4,18 +4,45 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="#F4F6F7">
+    android:background="#FFFFFF"> <!-- Dégradé orange pour l'effet apaisant -->
 
-    <!-- Logo avec marges optimisées -->
+    <!-- Image à gauche -->
+
+    <!-- Texte "Sign Up" en gras et centré avec une taille de texte agrandie -->
+
     <ImageView
-        android:id="@+id/top_image"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginBottom="30dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/sign1" />
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/signup" />
 
-    <!-- Champs de texte pour l'inscription avec coins arrondis -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Sign Up"
+        android:textStyle="bold"
+        android:textColor="#000000"
+    android:textSize="24sp"
+    android:layout_marginBottom="20dp"
+    />
+
+    <!-- Champ de texte pour le nom avec coins arrondis -->
+    <EditText
+        android:id="@+id/signup_name_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:hint="Full Name"
+        android:inputType="textPersonName"
+        android:background="@drawable/rounded_edittext_background"
+        android:padding="12dp"
+        android:textColor="@color/email_password_text_color" />
+
+    <!-- Champs de texte pour l'email avec coins arrondis -->
     <EditText
         android:id="@+id/signup_email_edit_text"
         android:layout_width="match_parent"
@@ -27,6 +54,7 @@
         android:padding="12dp"
         android:textColor="@color/email_password_text_color" />
 
+    <!-- Champs de texte pour le mot de passe avec coins arrondis -->
     <EditText
         android:id="@+id/signup_password_edit_text"
         android:layout_width="match_parent"
@@ -38,6 +66,7 @@
         android:padding="12dp"
         android:textColor="@color/email_password_text_color" />
 
+    <!-- Champ de vérification du mot de passe avec coins arrondis -->
     <EditText
         android:id="@+id/password_verification_edit_text"
         android:layout_width="match_parent"
@@ -58,11 +87,11 @@
         android:text="I agree to Terms of Service and Privacy Policy"
         android:textColor="#5D6D7E" />
 
-    <!-- Bouton d'inscription arrondi -->
+    <!-- Bouton d'inscription carré -->
     <Button
         android:id="@+id/sign_up_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginBottom="20dp"
         android:backgroundTint="#0A3D62"
         android:padding="12dp"
@@ -99,7 +128,7 @@
             android:background="#D3D3D3" />
     </LinearLayout>
 
-    <!-- Boutons de connexion Google et Facebook améliorés -->
+    <!-- Boutons de connexion Google et Facebook avec coins carrés -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -109,7 +138,7 @@
         <Button
             android:id="@+id/signup_google_button"
             android:layout_width="181dp"
-            android:layout_height="51dp"
+            android:layout_height="45dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:backgroundTint="#0A3D62"
@@ -122,7 +151,7 @@
         <Button
             android:id="@+id/sign_up_button_facebook"
             android:layout_width="181dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_weight="1"
             android:backgroundTint="#0A3D62"
             android:drawableLeft="@drawable/log_face"

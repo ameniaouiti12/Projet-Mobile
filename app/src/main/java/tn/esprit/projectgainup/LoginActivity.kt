@@ -11,9 +11,17 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import tn.esprit.projectgainup.dtos.AuthResponse
+import tn.esprit.projectgainup.dtos.LoginRequest
+import tn.esprit.projectgainup.remote.RetrofitClient
+import tn.esprit.projectgainup.utils.SharedPreferencesUtils
 
 class LoginActivity : AppCompatActivity() {
-    @SuppressLint("WrongViewCast", "CutPasteId")
+
+    @SuppressLint("WrongViewCast", "CutPasteId", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -32,37 +40,60 @@ class LoginActivity : AppCompatActivity() {
             passwordContainer.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F4F6F7"))
 
             // Vérification du champ email
-            if (emailEditText.text.toString().isEmpty()) {
+            val email = emailEditText.text.toString()
+            if (email.isEmpty()) {
                 emailContainer.backgroundTintList = ColorStateList.valueOf(Color.RED)
                 Toast.makeText(this, "Email is required", Toast.LENGTH_SHORT).show()
                 isValid = false
             }
 
             // Vérification du champ mot de passe
-            if (passwordEditText.text.toString().isEmpty()) {
+            val password = passwordEditText.text.toString()
+            if (password.isEmpty()) {
                 passwordContainer.backgroundTintList = ColorStateList.valueOf(Color.RED)
                 Toast.makeText(this, "Password is required", Toast.LENGTH_SHORT).show()
                 isValid = false
             }
 
-            // Vérification générale
+            // Si les champs sont valides, lancer la connexion
             if (isValid) {
-                // Simuler la connexion réussie
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
+                login(email, password)
             }
         }
 
         val forgotPasswordText: TextView = findViewById(R.id.change_password_link)
         forgotPasswordText.setOnClickListener {
             startActivity(Intent(this, ForgotPassword::class.java))
-
-
         }
 
         val signUpLink: TextView = findViewById(R.id.Register_link)
         signUpLink.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
+    }
+
+    // Fonction de connexion
+    private fun login(email: String, password: String) {
+        val loginRequest = LoginRequest(email, password)
+
+        RetrofitClient.apiService.login(loginRequest).enqueue(object : Callback<AuthResponse> {
+            override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
+                if (response.isSuccessful) {
+                    val authResponse = response.body()
+                    authResponse?.token?.let { token ->
+                        SharedPreferencesUtils.saveToken(this@LoginActivity, token)
+                    }
+                    Toast.makeText(this@LoginActivity, "Connexion réussie", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    finish()
+                } else {
+                    Toast.makeText(this@LoginActivity, "Échec de la connexion", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
+                Toast.makeText(this@LoginActivity, "Erreur de réseau", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

@@ -8,10 +8,16 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import tn.esprit.projectgainup.R
 
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import tn.esprit.projectgainup.dtos.AuthResponse
+import tn.esprit.projectgainup.dtos.SignupRequest
+import tn.esprit.projectgainup.remote.RetrofitClient
 class SignUpActivity : AppCompatActivity() {
 
+    private lateinit var nameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var confirmPasswordEditText: EditText
@@ -23,82 +29,96 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
-        // Initialize UI components
+        // Initialisation des composants UI
+        nameEditText = findViewById(R.id.signup_name_edit_text)  // Initialisez le champ de texte pour le nom
         emailEditText = findViewById(R.id.signup_email_edit_text)
         passwordEditText = findViewById(R.id.signup_password_edit_text)
         confirmPasswordEditText = findViewById(R.id.password_verification_edit_text)
         signUpButton = findViewById(R.id.sign_up_button)
         termsCheckbox = findViewById(R.id.terms_checkbox)
-        loginLink = findViewById(R.id.login_link)  // Initialize the login link TextView
+        loginLink = findViewById(R.id.login_link)
 
-        // Set up sign-up button click listener
+        // Gestion du clic sur le bouton d'inscription
         signUpButton.setOnClickListener {
+            val name = nameEditText.text.toString().trim()  // Récupérez le nom
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString()
             val confirmPassword = confirmPasswordEditText.text.toString()
 
-            // Validate input fields
-            if (validateInputs(email, password, confirmPassword)) {
+            // Validation des champs
+            if (validateInputs(name, email, password, confirmPassword)) {
                 if (termsCheckbox.isChecked) {
-                    // Handle successful sign-up here
-                    Toast.makeText(this, "Sign-up successful!", Toast.LENGTH_SHORT).show()
-
-                    // Cocher automatiquement la case "I agree to Terms"
-                    termsCheckbox.isChecked = true
-
-                    // Vous pouvez procéder avec votre logique d'inscription (par exemple, enregistrer dans la base de données, naviguer vers un autre écran, etc.)
+                    // Appeler la méthode d'inscription
+                    performSignUp(name, email, password, confirmPassword)
                 } else {
-                    // Show message to accept terms
                     Toast.makeText(this, "Please accept the terms and conditions.", Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
-        // Set up the login link click listener
+        // Gestion du clic sur le lien vers la page de connexion
         loginLink.setOnClickListener {
-            // Navigate to the LoginActivity
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
     }
 
-    // Function to validate inputs
-    private fun validateInputs(email: String, password: String, confirmPassword: String): Boolean {
+    // Fonction pour effectuer l'inscription via Retrofit
+    private fun performSignUp(name: String, email: String, password: String, confirmPassword: String) {
+        val signUpRequest = SignupRequest(name, email, password, confirmPassword)  // Passez le nom à l'objet de requête
+
+        RetrofitClient.apiService.signUp(signUpRequest).enqueue(object : Callback<AuthResponse> {
+            override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
+                if (response.isSuccessful && response.body()?.success == true) {
+                    Toast.makeText(this@SignUpActivity, "Sign-up successful!", Toast.LENGTH_SHORT).show()
+
+                    // Rediriger vers la page de connexion
+                    val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()  // Fermer l'activité SignUp
+                } else {
+                    Toast.makeText(this@SignUpActivity, response.body()?.message ?: "Sign-up failed!", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
+                Toast.makeText(this@SignUpActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    // Fonction pour valider les champs du formulaire
+    private fun validateInputs(name: String, email: String, password: String, confirmPassword: String): Boolean {
         var isValid = true
 
-        // Email validation
+        // Validation du nom
+        if (name.isEmpty()) {
+            nameEditText.error = "Name is required"
+            isValid = false
+        }
+
+        // Validation de l'email
         if (email.isEmpty()) {
             emailEditText.error = "Email is required"
-            emailEditText.setBackgroundColor(resources.getColor(R.color.red))
             isValid = false
         } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailEditText.error = "Please enter a valid email"
-            emailEditText.setBackgroundColor(resources.getColor(R.color.red))
             isValid = false
-        } else {
-            emailEditText.setBackgroundColor(resources.getColor(R.color.white))  // Restore color when valid
         }
 
-        // Password validation
+        // Validation du mot de passe
         if (password.isEmpty()) {
             passwordEditText.error = "Password is required"
-            passwordEditText.setBackgroundColor(resources.getColor(R.color.red))
             isValid = false
         } else if (password.length < 6) {
             passwordEditText.error = "Password must be at least 6 characters"
-            passwordEditText.setBackgroundColor(resources.getColor(R.color.red))
             isValid = false
-        } else {
-            passwordEditText.setBackgroundColor(resources.getColor(R.color.white))  // Restore color when valid
         }
 
-        // Confirm Password validation
+        // Validation de la confirmation du mot de passe
         if (password != confirmPassword) {
             confirmPasswordEditText.error = "Passwords do not match"
-            confirmPasswordEditText.setBackgroundColor(resources.getColor(R.color.red))
             isValid = false
-        } else {
-            confirmPasswordEditText.setBackgroundColor(resources.getColor(R.color.white))  // Restore color when valid
         }
 
         return isValid
